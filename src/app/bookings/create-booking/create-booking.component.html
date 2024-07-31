@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ selectedPlace.title }}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding ion-text-center">
+  <form (ngSubmit)="onBookPlace()" #f="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">First Name</ion-label>
+            <ion-input type="text" ngModel name="first-name" required placeholder="Enter your first name.."></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-label position="floating">Last Name</ion-label>
+            <ion-input type="text" ngModel name="last-name" required placeholder="Enter your last name.."></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size-sm="6" offsetSm="3">
+          <ion-item>
+            <ion-select label="# of guests" [ngModel]="'2'" name="guest-number" placeholder="Guests"
+              interface="popover">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col sizeSm="3" offsetSm="3">
+          <ion-item>
+            <ion-label position="stacked" class="ion-padding-bottom">From</ion-label>
+            <ion-datetime-button datetime="dateFrom" class="ion-padding-bottom"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="dateFrom" name="date-from" presentation="date" showDefaultButtons
+                  [value]="selectedPlace.availableFrom.toISOString()" (ionChange)="setEndMin($event)"
+                  [min]="selectedPlace.availableFrom.toISOString()" [max]="selectedPlace.availableTo.toISOString()"
+                  [ngModel]="startDate"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </ion-col>
+
+        <ion-col sizeSm="3">
+          <ion-item>
+            <ion-label position="stacked" class="ion-padding-bottom">To</ion-label>
+            <ion-datetime-button datetime="dateTo" class="ion-padding-bottom"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="dateTo" name="date-to" presentation="date" showDefaultButtons
+                  [value]="endMin || selectedPlace.availableFrom.toISOString()" [min]="endMin"
+                  [max]="selectedPlace.availableTo.toISOString()" [ngModel]="endDate"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col sizeSm="6" offsetSm="3">
+          <ion-button type="submit" expand="block" color="primary" shape="round" [disabled]="f.invalid">
+            Book!
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

@@ -1,0 +1,20 @@
+<ion-item>
+  <ion-thumbnail slot="start">
+    <ion-img [src]="offer.imageUrl"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <h1>{{ offer.title }}, <small>{{offer.price | currency}}</small></h1>
+    <!-- <p>{{ offer.description }}</p> -->
+    <div class="offer-details">
+      <ion-icon name="calendar" color="secondary"></ion-icon>
+      <ion-text color="success">
+        {{ offer.availableFrom| date}}
+      </ion-text>
+      <span>to</span>
+      <ion-icon name="calendar" color="secondary"></ion-icon>
+      <ion-text color="success">
+        {{ offer.availableTo | date}}
+      </ion-text>
+    </div>
+  </ion-label>
+</ion-item>
